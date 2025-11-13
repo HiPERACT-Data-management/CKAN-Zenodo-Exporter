@@ -209,7 +209,7 @@ Developed by ** PSNC **
 
 ## 📄 License
 
-This project is released under the **MIT License** (or specify another if preferred).
+This project is released under the **MIT License**.
 
 ---
 
