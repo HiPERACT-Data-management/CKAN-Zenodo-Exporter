@@ -1,0 +1,176 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+img {
+    border: 0;
+}
+
+a {
+  color: #0084c9;
+  text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+body {
+    background-color: #3a3a3a;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 13px;
+    color: #27292f;
+}
+
+div#bg_wrap {
+    background: #f7f7f7;
+    overflow: hidden;
+}
+
+div#bg_header {
+    background-color: #0C3C60;
+}
+
+#main_header {
+    height: 100px;
+    font-size: 24px;
+    padding: 32px 0 0 10px;
+    color: #fff;
+    /*max-width: 1260px;*/
+    margin: 0 auto;
+}
+
+span#header_text {
+    cursor: pointer;
+}
+
+div#content {
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 8px;
+    min-height: 510px;
+    /*max-width: 1260px;*/
+}
+
+div#menu_content {
+    margin: 0 auto;
+    /*max-width: 1260px;*/
+}
+
+#footer {
+    padding: 16px 0 0;
+    color: #fff;
+    /*max-width: 1260px;*/
+    margin: 0 auto;
+    text-align: center;
+}
+
+#footer p {
+    margin-bottom: 16px;
+}
+
+.eduroam_logo {
+    max-height: 64px;
+    max-width: 280px;
+    float: right;
+    vertical-align: middle;
+}
+
+@media screen and (max-width: 560px) {
+    #main_header {
+        font-size: 24px;
+        padding: 16px 0 0 10px;
+    }
+
+    img {
+        width: 100%;
+    }
+
+    .eduroam_logo {
+        width: auto;
+    }
+}
+
+table {
+    border-collapse: collapse;
+    font-size: 13px;
+    color: #27292f;
+    width: 100%;
+    border: 1px solid #ebeef1;
+    margin-bottom: 20px;
+}
+
+table tr:hover {
+    background-color: #F7FAFF;
+}
+
+table td, table th {
+    border: 1px solid #ebeef1;
+    padding: 5px 8px;
+    text-align: left;
+}
+
+table tr:nth-child(even), table tr.zebra {
+    background: #fafafa;
+}
+
+table thead th, table tr th {
+    background: #0084c9 !important;
+    color: #fff;
+}
+
+table th a {
+    color: #ffffff;
+}
+
+ol, ul {
+    margin-left: 20px;
+}
+
+ol li, ul li {
+    margin-bottom: 4px;
+}
+
+ul#menu {
+    list-style-type: none;
+    padding: 0;
+    overflow: hidden;
+    background-color: #f3f3f3;
+    margin: 4px;
+}
+
+ul#menu li {
+    float: left;
+}
+
+ul#menu li a {
+    display: block;
+    color: #666;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+  /* Change the link color to #111 (black) on hover */
+ul#menu li a:hover {
+    background-color: #DDDDDD;
+}
+
+ul#menu li a#current {
+    background-color: #007CA8;
+    color: #ffffff;
+}
+
+input[type=button], input[type=submit], input[type=reset], button {
+      background-color: #008CBA;
+      border: none;
+      color: #ffffff;
+      padding: 8px 16px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+    cursor: pointer;
+}

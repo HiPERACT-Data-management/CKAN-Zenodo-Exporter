@@ -1,0 +1,6 @@
+Flask
+waitress
+requests
+ckanapi
+pika
+pymysql

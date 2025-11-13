@@ -1,0 +1,39 @@
+<div id="zenodo_deposit_1" style="display: none">
+    <div class="control_group">
+         <label for="sel_depsition" class="control_label">Zenodo deposition:</label>
+         <div class="control">
+              <select name="sel_depsition" id="sel_depsition">
+              {% for d in dep %}
+              <option value="{{d['id']}}">{{d['title']}}</option>
+              {% endfor %}
+              </select>
+         </div>
+         <div class="validation">
+         </div>
+    </div>
+    <div class="control_group txt_center">
+         <input type="button" class="blue_button" value="Export to Zenodo" onclick="export_to_zenodo(); return false;" />
+    </div>
+</div>
+
+<div id="zenodo_deposit_2" style="display: none">
+    <div class="control_group">
+         <label for="txt_deposit_name" class="control_label">Deposition title:</label>
+         <div class="control">
+              <input type="text" id="txt_deposit_name" name="txt_deposit_name" placeholder="Zenodo deposit name" />
+         </div>
+         <div class="validation">
+         </div>
+    </div>
+    <div class="control_group">
+         <label for="txt_deposit_desc" class="control_label">Deposition description:</label>
+         <div class="control">
+              <input type="text" id="txt_deposit_desc" name="txt_deposit_desc" placeholder="Zenodo deposit description" />
+         </div>
+         <div class="validation">
+         </div>
+    </div>
+    <div class="control_group txt_center">
+         <input type="button" class="blue_button" value="Export to Zenodo" onclick="create_deposit_and_export(); return false;" />
+    </div>
+</div>

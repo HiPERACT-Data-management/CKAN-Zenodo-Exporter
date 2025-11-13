@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="shortcut icon" href="../static/favicon.png" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" media="all" href="../static/style.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="../static/forms.css" />
+    <script src="../static/jquery-3.7.1.js"></script>
+    <script src="../static/functions.js"></script>
+    <title>ckan-zenodo - {% block title %}{% endblock %}</title>
+</head>
+<body>
+    <div id="bg_wrap">
+        <div id="bg_header">
+            <header id="main_header">
+                <span id="header_text"><span style="color: #7DCADA;">CKAN TO ZENODO</span></span>
+            </header>
+        </div>
+
+        <div id="content">
+            <div>
+                {% if username %}
+                    <h4>Welcome, {{ username }}! [<a href="/logout" >Logout</a>] | <a href="./transfers">Transfers</a></h4>
+                {% else %}
+                    <a href="/login">Login</a>
+                {% endif %}
+            </div>
+            <br>
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+    <footer id="footer">
+        <p>&copy; PSNC 2025</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}CKAN export to ZENODO{% endblock %}
+{% block content %}
+    <h2>Export <strong>{{res.name}}</strong> to ZENODO</h2>
+    <br><br>
+<form>
+    <div id="step_one">
+        <div class="control_group">
+            <label for="inp_zenodo_apikey" class="control_label">Zenodo API key:</label>
+            <div class="control">
+                <input id="inp_zenodo_apikey" type="text" name="inp_zenodo_apikey" value="" />
+            </div>
+            <div class="validation">
+            </div>
+        </div>
+
+        <div class="control_group txt_center">
+            <input type="button" class="blue_button" value="Select deposition" onclick="list_depositions(1); return false;" />
+            <input type="button" class="blue_button" value="Create deposition" onclick="list_depositions(2); return false;" />
+        </div>
+    </div>
+
+    <div id="step_two">
+        <div id="output_step_two"></div>
+    </div>
+
+    <input type="hidden" id="ckan_resource_id" value="{{res.id}}" />
+    <input type="hidden" id="ckan_package_title" value="{{pac.title}}" />
+    <input type="hidden" id="ckan_package_desc" value="{{pac.notes}}" />
+</form>
+
+<div id="output" class="txt_center"></div>
+
+<br><br>
+
+{% endblock %}
