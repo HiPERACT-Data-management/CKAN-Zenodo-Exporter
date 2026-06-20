@@ -1,10 +1,24 @@
 
-function showProgress() {
+// Attach CSRF token to all non-safe AJAX requests
+$.ajaxSetup({
+    beforeSend: function(xhr, settings) {
+        if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type)) {
+            var token = $('meta[name="csrf-token"]').attr('content');
+            if (token) {
+                xhr.setRequestHeader('X-CSRFToken', token);
+            }
+        }
+    }
+});
 
+function showProgress() {
+    $('#loading_overlay').show();
+    $('button, input[type="button"]').prop('disabled', true);
 }
 
 function hideProgress() {
-
+    $('#loading_overlay').hide();
+    $('button, input[type="button"]').prop('disabled', false);
 }
 
 function export_to_zenodo(){
@@ -16,20 +30,17 @@ function export_to_zenodo(){
             url: "ajax",
             data: {
                 action: "export_to_zenodo",
-                zenodo_apikey: $('#inp_zenodo_apikey').val(),
+                // Zenodo API key is stored server-side after list_depositions; not re-sent here
                 ckan_resource_id: $('#ckan_resource_id').val(),
                 deposition_id: $('#sel_depsition option:selected').val()
             },
             success: function (data) {
-                $("#output").html(data)
+                $("#output").html(data);
                 hideProgress();
             },
-            complete: function () {
-
-            },
+            complete: function () {},
             error: function () {
-                //$("#output").html('<div class="info error">Wystąpił nieoczekiwany problem</div>');
-                //setPopupSize();
+                $("#output").html('<div style="color:red;">An unexpected error occurred. Please reload and try again.</div>');
                 hideProgress();
             },
             dataType: 'text'
@@ -49,21 +60,49 @@ function create_deposit_and_export() {
             url: "ajax",
             data: {
                 action: "create_deposit_and_export",
-                zenodo_apikey: $('#inp_zenodo_apikey').val(),
+                // Zenodo API key is stored server-side after list_depositions; not re-sent here
                 ckan_resource_id: $('#ckan_resource_id').val(),
                 deposit_name: $('#txt_deposit_name').val(),
                 deposit_desc: $('#txt_deposit_desc').val(),
+                upload_type: $('#sel_upload_type').val(),
+                access_right: $('#sel_access_right').val(),
             },
             success: function (data) {
-                $("#output").html(data)
+                $("#output").html(data);
                 hideProgress();
             },
-            complete: function () {
-
-            },
+            complete: function () {},
             error: function () {
-                //$("#output").html('<div class="info error">Wystąpił nieoczekiwany problem</div>');
-                //setPopupSize();
+                $("#output").html('<div style="color:red;">An unexpected error occurred. Please reload and try again.</div>');
+                hideProgress();
+            },
+            dataType: 'text'
+        });
+    } catch (e) {
+        hideProgress();
+        alert(e);
+    }
+}
+
+function export_package_to_zenodo() {
+    try {
+        showProgress();
+        $("#output").html('<img src="static/progress.gif" alt="progress">');
+        $.ajax({
+            type: "POST",
+            url: "ajax",
+            data: {
+                action: "export_package_to_zenodo",
+                package_id: $('#ckan_package_id').val(),
+                deposition_id: $('#sel_depsition option:selected').val()
+            },
+            success: function (data) {
+                $("#output").html(data);
+                hideProgress();
+            },
+            complete: function () {},
+            error: function () {
+                $("#output").html('<div style="color:red;">An unexpected error occurred. Please reload and try again.</div>');
                 hideProgress();
             },
             dataType: 'text'
@@ -100,12 +139,9 @@ function list_depositions(option) {
                 $("#output").html('');
                 hideProgress();
             },
-            complete: function () {
-
-            },
+            complete: function () {},
             error: function () {
-                //$("#output").html('<div class="info error">Wystąpił nieoczekiwany problem</div>');
-                //setPopupSize();
+                $("#output_step_two").html('<div style="color:red;">Failed to load depositions. Check your API key and try again.</div>');
                 hideProgress();
             },
             dataType: 'text'

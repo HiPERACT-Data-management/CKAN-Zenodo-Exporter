@@ -3,22 +3,94 @@
 {% block content %}
     <h2>Transfers to ZENODO</h2>
     <br>
+    <div id="retry_output"></div>
     <table>
     <tr>
         <th>file name</th>
         <th>deposition name</th>
         <th>status</th>
+        <th>retry #</th>
         <th>created at</th>
         <th>updated at</th>
+        <th></th>
     </tr>
     {% for t in transfers %}
-        <tr>
-            <td>{{t.filename}}</td>
-            <td>{{t.deposition_name}}</td>
-            <td>{{t.status}}</td>
-            <td>{{t.created_at}}</td>
-            <td>{{t.updated_at}}</td>
+        <tr id="transfer-{{ t.id }}" data-status="{{ t.status }}">
+            <td>{{ t.filename }}</td>
+            <td>{{ t.deposition_name }}</td>
+            <td class="status-cell">
+                <span class="status-badge status-{{ t.status }}">{{ t.status }}</span>
+            </td>
+            <td>{{ t.retry_count }}</td>
+            <td>{{ t.created_at }}</td>
+            <td>{{ t.updated_at }}</td>
+            <td class="action-cell">
+                {% if t.status == 'failed' %}
+                <button class="blue_button" onclick="retryTransfer({{ t.id }}); return false;">Retry</button>
+                {% endif %}
+            </td>
         </tr>
     {% endfor %}
-</table>
+    </table>
+
+<style>
+.status-badge { padding: 2px 8px; border-radius: 3px; font-size: 0.9em; }
+.status-pending    { background: #f0ad4e; color: #fff; }
+.status-in_progress { background: #5bc0de; color: #fff; }
+.status-completed  { background: #5cb85c; color: #fff; }
+.status-failed     { background: #d9534f; color: #fff; }
+</style>
+
+<script>
+function retryTransfer(transferId) {
+    showProgress();
+    $.ajax({
+        type: "POST",
+        url: "/ajax",
+        data: { action: "retry_transfer", transfer_id: transferId },
+        success: function(data) {
+            $('#retry_output').html(data);
+            // refresh the row status after a short delay
+            setTimeout(function() { pollTransferStatus(); }, 1000);
+        },
+        error: function() {
+            $('#retry_output').html('<div style="color:red;">Failed to retry. Please reload and try again.</div>');
+        },
+        complete: function() { hideProgress(); },
+        dataType: 'text'
+    });
+}
+
+function pollTransferStatus() {
+    $('tr[data-status="pending"], tr[data-status="in_progress"]').each(function() {
+        var row = $(this);
+        var transferId = row.attr('id').replace('transfer-', '');
+        $.ajax({
+            type: "GET",
+            url: "/api/transfer/" + transferId,
+            success: function(data) {
+                var badge = row.find('.status-badge');
+                badge.text(data.status);
+                badge.attr('class', 'status-badge status-' + data.status);
+                row.attr('data-status', data.status);
+                row.find('td:nth-child(4)').text(data.retry_count);
+                row.find('td:nth-child(6)').text(data.updated_at);
+                if (data.status === 'failed') {
+                    row.find('.action-cell').html(
+                        '<button class="blue_button" onclick="retryTransfer(' + transferId + '); return false;">Retry</button>'
+                    );
+                } else if (data.status === 'completed') {
+                    row.find('.action-cell').html('');
+                }
+            }
+        });
+    });
+}
+
+$(document).ready(function() {
+    if ($('tr[data-status="pending"], tr[data-status="in_progress"]').length > 0) {
+        setInterval(pollTransferStatus, 5000);
+    }
+});
+</script>
 {% endblock %}

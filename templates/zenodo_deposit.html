@@ -12,7 +12,8 @@
          </div>
     </div>
     <div class="control_group txt_center">
-         <input type="button" class="blue_button" value="Export to Zenodo" onclick="export_to_zenodo(); return false;" />
+         <input type="button" class="blue_button" value="Export this resource" onclick="export_to_zenodo(); return false;" />
+         <input type="button" class="blue_button" value="Export all resources in dataset" onclick="export_package_to_zenodo(); return false;" />
     </div>
 </div>
 
@@ -33,7 +34,35 @@
          <div class="validation">
          </div>
     </div>
+    <div class="control_group">
+         <label for="sel_upload_type" class="control_label">Upload type:</label>
+         <div class="control">
+              <select id="sel_upload_type" name="sel_upload_type">
+                   <option value="dataset" {% if default_upload_type == 'dataset' %}selected{% endif %}>Dataset</option>
+                   <option value="software" {% if default_upload_type == 'software' %}selected{% endif %}>Software</option>
+                   <option value="publication" {% if default_upload_type == 'publication' %}selected{% endif %}>Publication</option>
+                   <option value="image" {% if default_upload_type == 'image' %}selected{% endif %}>Image</option>
+                   <option value="video" {% if default_upload_type == 'video' %}selected{% endif %}>Video</option>
+                   <option value="presentation" {% if default_upload_type == 'presentation' %}selected{% endif %}>Presentation</option>
+                   <option value="poster" {% if default_upload_type == 'poster' %}selected{% endif %}>Poster</option>
+                   <option value="lesson" {% if default_upload_type == 'lesson' %}selected{% endif %}>Lesson</option>
+                   <option value="physicalobject" {% if default_upload_type == 'physicalobject' %}selected{% endif %}>Physical Object</option>
+                   <option value="other" {% if default_upload_type == 'other' %}selected{% endif %}>Other</option>
+              </select>
+         </div>
+    </div>
+    <div class="control_group">
+         <label for="sel_access_right" class="control_label">Access right:</label>
+         <div class="control">
+              <select id="sel_access_right" name="sel_access_right">
+                   <option value="restricted" {% if default_access_right == 'restricted' %}selected{% endif %}>Restricted</option>
+                   <option value="open" {% if default_access_right == 'open' %}selected{% endif %}>Open</option>
+                   <option value="embargoed" {% if default_access_right == 'embargoed' %}selected{% endif %}>Embargoed</option>
+                   <option value="closed" {% if default_access_right == 'closed' %}selected{% endif %}>Closed</option>
+              </select>
+         </div>
+    </div>
     <div class="control_group txt_center">
-         <input type="button" class="blue_button" value="Export to Zenodo" onclick="create_deposit_and_export(); return false;" />
+         <input type="button" class="blue_button" value="Create deposition &amp; export" onclick="create_deposit_and_export(); return false;" />
     </div>
 </div>

@@ -1,6 +1,8 @@
 Flask
+Flask-WTF
 waitress
 requests
 ckanapi
 pika
 pymysql
+DBUtils

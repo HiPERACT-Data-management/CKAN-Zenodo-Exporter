@@ -1,3 +1,2 @@
-{% autoescape false %}
-     {{message}}
-{% endautoescape %}
+{{ message }}
+{% if back_button %}<button onclick="history.back()">Go Back</button>{% endif %}

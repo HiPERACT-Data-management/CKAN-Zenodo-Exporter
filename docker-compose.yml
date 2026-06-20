@@ -1,0 +1,72 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER:-guest}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS:-guest}
+    healthcheck:
+      test: rabbitmq-diagnostics ping
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  db:
+    image: mariadb:11
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-rootpass}
+      MARIADB_DATABASE: zenodo_export
+      MARIADB_USER: zenodo_user
+      MARIADB_PASSWORD: ${DB_PASSWORD:-zenodopass}
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./sql/database.sql:/docker-entrypoint-initdb.d/01_schema.sql
+    healthcheck:
+      test: healthcheck.sh --connect --innodb_initialized
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  migrate:
+    build: .
+    command: python migrate.py
+    volumes:
+      - ./settings.ini:/app/settings.ini:ro
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+
+  server:
+    build: .
+    command: python server.py
+    ports:
+      - "8090:8090"
+    volumes:
+      - ./settings.ini:/app/settings.ini:ro
+      - ckan_resources:/mnt/vol:ro
+    depends_on:
+      db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    restart: unless-stopped
+
+  worker:
+    build: .
+    command: python worker.py
+    volumes:
+      - ./settings.ini:/app/settings.ini:ro
+      - ckan_resources:/mnt/vol:ro
+    depends_on:
+      db:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  db_data:
+  ckan_resources:

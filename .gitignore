@@ -1,1 +1,6 @@
 .DS_Store
+settings.ini
+*.log
+__pycache__/
+venv/
+*.pyc
