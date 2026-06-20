@@ -365,14 +365,8 @@ See the detailed step-by-step guide: [USER_MANUAL.md](USER_MANUAL.md)
 
 ---
 
-## Authors
-
-Developed at **PSNC** (Poznań Supercomputing and Networking Center)  
-📧 pdzierzak@man.poznan.pl, lawenda@man.poznan.pl  
-🔗 https://psnc.pl
-
----
-
 ## License
 
-This project is released under the **MIT License**.
+MIT License — see [LICENSE](LICENSE).
+
+Copyright (c) 2023-2026 Marcin Lawenda, Poznan Supercomputing and Networking Center
