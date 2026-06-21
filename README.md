@@ -359,9 +359,13 @@ All tests use mocked external dependencies (CKAN API, Zenodo API, RabbitMQ, Mari
 
 ---
 
-## User Manual
+## Documentation
 
-See the detailed step-by-step guide: [USER_MANUAL.md](USER_MANUAL.md)
+| Document | Description |
+|---|---|
+| [Installation Guide](docs/installation.md) | System requirements, Docker Compose setup, manual installation, systemd services, CKAN integration, Keycloak configuration, nginx reverse proxy |
+| [User Guide](docs/user_guide.md) | Step-by-step export instructions, transfer monitoring, retry workflow, FAQ |
+| [Developer Guide](docs/developer_guide.md) | Architecture, module reference, data flow, DB schema, API reference, security model, testing strategy, extension points |
 
 ---
 
