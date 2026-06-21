@@ -1,0 +1,51 @@
+[app]
+# Long random string — generate with: python -c "import secrets; print(secrets.token_hex(32))"
+secret_key = CHANGE_ME
+log_file = /var/log/ckan-zenodo-export.log
+# 0 = unlimited; positive integer = max file size in MB
+max_file_size_mb = 0
+# Set true to send email on transfer completion or final failure (requires [smtp] config)
+notify_on_completion = false
+
+[ckan]
+server = https://ckan.example.com
+apikey = <ckan-service-account-api-key>
+# Path to CKAN's file storage (must be accessible on the server running this app)
+resources_path = /mnt/vol/ckan/default/resources
+# Path for user-uploaded files; {user} is replaced at runtime with the username
+resources_usr_path = /mnt/vol/homes/{user}/ckan-pub
+resources_usr_url = https://ckan.example.com:8443/~
+
+[mysql]
+host = localhost
+user = zenodo_user
+password = CHANGE_ME
+database = zenodo_export
+
+[sso]
+keycloak_server_url = https://keycloak.example.com
+realm_name = myrealm
+client_id = ckan-zenodo-exporter
+client_secret = CHANGE_ME
+redirect_uri = https://ckan.example.com:8090/callback
+
+[rabbitmq]
+host = localhost
+queue = zenodo_upload
+max_retries = 3
+
+[zenodo]
+api_url = https://zenodo.org/api/deposit/depositions
+# Set true to target sandbox.zenodo.org instead of zenodo.org (for testing)
+use_sandbox = false
+upload_type = dataset
+access_right = restricted
+
+[smtp]
+enabled = false
+host = smtp.example.com
+port = 587
+use_tls = true
+username =
+password =
+from_addr = noreply@example.com
