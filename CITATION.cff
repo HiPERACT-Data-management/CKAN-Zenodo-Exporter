@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata from this file."
+type: software
+title: "CKAN-Zenodo-Exporter"
+abstract: >-
+  Web application that publishes datasets from CKAN data portals directly to
+  Zenodo, with single-resource or full-dataset export, Keycloak SSO,
+  asynchronous RabbitMQ transfers with retry, and live status tracking.
+authors:
+  - family-names: Lawenda
+    given-names: Marcin
+    orcid: "https://orcid.org/0000-0003-4844-3655"
+    affiliation: "Poznan Supercomputing and Networking Center"
+    email: lawenda@man.poznan.pl
+  - family-names: Dzierżak
+    given-names: Piotr
+repository-code: "https://github.com/HiPERACT-Data-management/CKAN-Zenodo-Exporter"
+license: MIT
+version: 0.1.0
+date-released: "2026-10-11"
+keywords:
+  - ckan
+  - zenodo
+  - research data management
+  - open science
