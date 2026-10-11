@@ -16,6 +16,7 @@ authors:
     given-names: Piotr
 repository-code: "https://github.com/HiPERACT-Data-management/CKAN-Zenodo-Exporter"
 license: MIT
+doi: 10.5281/zenodo.23299542
 version: 0.1.0
 date-released: "2026-10-11"
 keywords:
